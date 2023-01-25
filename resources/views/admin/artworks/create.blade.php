@@ -19,10 +19,10 @@
             </div>
 
             <div class="mb-3">
-                <label for="bio" class="form-label">Bio</label>
-                <textarea class="form-control @error('bio') is-invalid @enderror " id="bio" name="bio" value="{{old('bio')}}" aria-describedby="emailHelp">
+                <label for="description" class="form-label">description</label>
+                <textarea class="form-control @error('description') is-invalid @enderror " id="description" name="description" value="{{old('description')}}" aria-describedby="emailHelp">
                 </textarea>
-                {{-- @error('bio')
+                {{-- @error('description')
                 <p class="invalid-feedback">
                   {{$message}}
                 </p>
@@ -41,6 +41,18 @@
                 value="{{old('image')}}" aria-describedby="emailHelp">
 
                 {{-- @error('image')
+                <p class="invalid-feedback">
+                  {{$message}}
+                </p>
+                @enderror --}}
+
+            </div>
+
+            <div class="mb-3">
+                <label for="year" class="form-label">Anno</label>
+                <input type="number" class="form-control @error('year') is-invalid @enderror " id="year" name="year" value="{{old('year')}}" aria-describedby="emailHelp">
+
+                {{-- @error('name')
                 <p class="invalid-feedback">
                   {{$message}}
                 </p>

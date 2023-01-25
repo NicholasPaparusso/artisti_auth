@@ -9,6 +9,15 @@ class Artwork extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'artist_id',
+        'slug',
+        'image',
+        'description',
+        'year',
+    ];
+
     public function artist(){
         return $this->belongsTo(Artist::class);
     }

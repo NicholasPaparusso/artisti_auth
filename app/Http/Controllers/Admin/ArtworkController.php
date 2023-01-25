@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Artwork;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArtworkController extends Controller
 {
@@ -40,6 +41,15 @@ class ArtworkController extends Controller
     {
         $artwork_form = $request->all();
         $artwork_form['slug'] = Artwork::generateSlug($artwork_form ['name']);
+
+        if(array_key_exists('image', $artwork_form)){
+            $artwork_form['image'] = Storage::disk('public')->put('uploads', $artwork_form['image']);
+        }
+
+        $new_artwork = Artwork::create($artwork_form);
+
+
+        return redirect()->route('admin.artworks.show', $new_artwork);
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+{{-- @extends('layouts.admin')
 
 @section('content')
 <h3 class="text-center pt-3" >Modifica di {{'admin.'}}</h3>
@@ -64,4 +64,4 @@
             }
         </script>
 
-@endsection
+@endsection --}}
