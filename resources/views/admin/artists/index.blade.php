@@ -16,16 +16,26 @@
                     <tr>
                         <th scope="row">{{ $artist->id }}</th>
                         <td>{{ $artist->name }}</td>
-                        <td>
+                        <td class="d-flex">
+
                             <a class="btn btn-primary" href="{{ route('admin.artists.show', $artist) }}">
                                 <i class="fa-solid fa-eye"></i>
                             </a>
-                            <a class="btn btn-warning mx-2" href="">
+
+                            <a class="btn btn-warning mx-2" href="{{ route('admin.artists.edit', $artist) }}">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <a class="btn btn-danger" href="">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
+
+                            <form action="{{ route('admin.artists.destroy', $artist) }}" method="POST"
+                                onsubmit="return confirm('confermi l\'eliminazione?')">
+                                @csrf
+                                @method('DELETE')
+
+                                <button title="delete" type="submit" class="btn btn-danger"><i
+                                        class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+
                         </td>
                     </tr>
                 @endforeach
