@@ -30,6 +30,14 @@
                                     class="fa-regular fa-eye"></i></a>
                             <a class="btn btn-warning " href="{{ route('admin.museums.edit', $museum) }}" title="edit"><i
                                     class="fa-solid fa-pencil"></i></a>
+                            <form class="d-inline"
+                                onsubmit="return confirm('Confermi l\'eliminazione di {{ $museum->name }} ?')"
+                                class="d-inline" method="POST" action="{{ route('admin.museums.destroy', $museum) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger fw-bold" type="submit"><i
+                                        class="fa-solid fa-trash"></i></button>
+                            </form>
                         </td>
                     </tr>
                 @empty
