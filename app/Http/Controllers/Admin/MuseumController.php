@@ -46,6 +46,8 @@ class MuseumController extends Controller
         $form_data['slug'] = Museum::generateSlug($form_data['name']);
 
         $new_museum = Museum::create($form_data);
+
+        return redirect()->route('admin.museums.show', compact('museum'))->with("Museo $new_museum aggiunto al db.");
     }
 
     /**
@@ -54,9 +56,9 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Museum $museum)
     {
-        //
+        return view('admin.museums.show', compact('museum'));
     }
 
     /**
@@ -65,9 +67,9 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Museum $museum)
     {
-        //
+        return view('admin.museum.edit', compact('museum'));
     }
 
     /**
