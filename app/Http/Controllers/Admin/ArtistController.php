@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ArtistRequest;
 use App\Models\Artist;
 use App\Models\Artwork;
 use App\Models\Museum;
@@ -28,18 +29,17 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        $museums = Museum::all();
         $artworks = Artwork::all();
-        return view('admin.artists.create', compact('museums', 'artworks'));
+        return view('admin.artists.create', compact('artworks'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ArtistRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArtistRequest $request)
     {
         $form_data = $request->all();
         $form_data['slug'] = Artist::generateSlug($form_data['name']);
@@ -73,19 +73,18 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        $museums = Museum::all();
         $artworks = Artwork::all();
-        return view('admin.artists.edit', compact('artist', 'museums', 'artworks'));
+        return view('admin.artists.edit', compact('artist', 'artworks'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\ArtistRequest  $ArtistRequest
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Artist $artist)
+    public function update(ArtistRequest $request, Artist $artist)
     {
         $form_data = $request->all();
 
@@ -96,12 +95,12 @@ class ArtistController extends Controller
         }
 
         $artist->update($form_data);
-
+        /*
         if (array_key_exists('artworks', $form_data)) {
             $artist->artworks()->sync($form_data['artworks']);
         } else {
             $artist->artworks()->detach();
-        }
+        } */
 
         return redirect()->route('admin.artists.show', $artist);
     }
