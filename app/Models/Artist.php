@@ -19,15 +19,10 @@ class Artist extends Model
         'artwork_id',
     ];
 
-    public function artworks()
+    /*     public function artworks()
     {
         return $this->hasMany(Artwork::class);
-    }
-
-    public function museums()
-    {
-        return $this->hasMany(Museum::class);
-    }
+    } */
 
     public static function generateSlug($string)
     {
