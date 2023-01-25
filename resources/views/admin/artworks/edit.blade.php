@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<h3 class="text-center pt-3" >Creazione nuova Artwork</h3>
+<h3 class="text-center pt-3" >Modifica di {{'admin.'}}</h3>
     <div class="container d-flex justify-content-center py-5">
         <form action="{{route('admin.artworks.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
