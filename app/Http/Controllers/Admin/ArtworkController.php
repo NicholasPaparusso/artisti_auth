@@ -26,7 +26,8 @@ class ArtworkController extends Controller
      */
     public function create()
     {
-        //
+        $artworks = Artwork::all();
+        return view('admin.artworks.create', compact('artworks'));
     }
 
     /**
@@ -37,7 +38,8 @@ class ArtworkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $artwork_form = $request->all();
+        $artwork_form['slug'] = Artwork::generateSlug($artwork_form ['name']);
     }
 
     /**
@@ -59,7 +61,8 @@ class ArtworkController extends Controller
      */
     public function edit($id)
     {
-        //
+        $artworks = Artwork::all();
+        return view('admin.artworks.edit', compact('artworks'));
     }
 
     /**

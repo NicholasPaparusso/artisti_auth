@@ -5,6 +5,9 @@
         ARTWORKS DB
     </h1>
     <div class="container">
+        <div class="my-3">
+            <a class="btn btn-primary" href="{{ route('admin.artworks.create') }}">Add a new Artwork</a>
+        </div>
         <div class="row">
             <div class="col">
                 <table class="table table-striped">
@@ -28,7 +31,8 @@
                                 <td>{{ $artwork->year }}</td>
                                 <td>
                                     <a class="btn btn-success" href="{{route('admin.artworks.show', $artwork)}}">Vai</a>
-                                    <a class="btn btn-warning" href="">Edita</a>
+                                    <a class="btn btn-warning" href="{{route('admin.artworks.edit', $artwork)}}">Edita</a>
+
                                     <form action="" method="POST" class="d-inline"
                                         onsubmit="return confirm('Confermi l\'eliminazione di: {{ $artwork->name }}?')"
                                         class="d-inline" action="" method="POST">
@@ -42,6 +46,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $all_artworks->links() }}
             </div>
         </div>
     </div>
