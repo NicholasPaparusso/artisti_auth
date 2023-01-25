@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
+use App\Models\Artwork;
+use App\Models\Museum;
 use Illuminate\Http\Request;
 
 class ArtistController extends Controller
@@ -26,7 +28,9 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        return view('admin.artists.create');
+        $museums = Museum::all();
+        $artworks = Artwork::all();
+        return view('admin.artists.create', compact('museums', 'artworks'));
     }
 
     /**
@@ -38,14 +42,15 @@ class ArtistController extends Controller
     public function store(Request $request)
     {
         $form_data = $request->all();
+        $form_data['slug'] = Artist::generateSlug($form_data['name']);
 
-        $new_artist = new Artist();
+        $new_artist = Artist::Create($form_data);
 
-        $new_artist->name = $form_data['name'];
+        if (array_key_exists('artworks', $form_data)) {
+            $new_artist->artworks()->attach($form_data['artworks']);
+        }
 
-        $new_artist->save();
-
-        return redirect(route('artists.index'));
+        return redirect()->route('admin.artists.show', $new_artist);
     }
 
     /**
@@ -54,8 +59,9 @@ class ArtistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Artist $artist)
+    public function show($id)
     {
+        $artist = Artist::findOrFail($id);
         return view('admin.artists.show', compact('artist'));
     }
 
@@ -65,9 +71,11 @@ class ArtistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Artist $artist)
     {
-        //
+        $museums = Museum::all();
+        $artworks = Artwork::all();
+        return view('admin.artists.edit', compact('artist', 'museums', 'artworks'));
     }
 
     /**
@@ -77,9 +85,25 @@ class ArtistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Artist $artist)
     {
-        //
+        $form_data = $request->all();
+
+        if ($form_data['name'] != $artist->name) {
+            $form_data['slug'] = Artist::generateSlug(($form_data['name']));
+        } else {
+            $form_data['slug'] = $artist->slug;
+        }
+
+        $artist->update($form_data);
+
+        if (array_key_exists('artworks', $form_data)) {
+            $artist->artworks()->sync($form_data['artworks']);
+        } else {
+            $artist->artworks()->detach();
+        }
+
+        return redirect()->route('admin.artists.show', $artist);
     }
 
     /**
@@ -88,8 +112,9 @@ class ArtistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Artist $artist)
     {
-        //
+        $artist->delete();
+        return redirect()->route('admin.artists.index')->with('deleted', "$artist->name eliminato correttamente");
     }
 }
