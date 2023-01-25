@@ -20,14 +20,14 @@
                     </thead>
                     <tbody>
                         @foreach ($all_artworks as $artwork)
-                            <tr class="text-white">
+                            <tr class="">
                                 <td>{{ $artwork->id }}</td>
                                 <td>{{ $artwork->artist_id }}</td>
-                                <td>{{ $artwork->museum_id }}</td>
+                                {{-- <td>{{ $artwork->museum_id }}</td> --}}
                                 <td>{{ $artwork->name }}</td>
                                 <td>{{ $artwork->year }}</td>
                                 <td>
-                                    <a class="btn btn-success" href="">Vai</a>
+                                    <a class="btn btn-success" href="{{route('admin.artworks.show', $artwork)}}">Vai</a>
                                     <a class="btn btn-warning" href="">Edita</a>
                                     <form action="" method="POST" class="d-inline"
                                         onsubmit="return confirm('Confermi l\'eliminazione di: {{ $artwork->name }}?')"
