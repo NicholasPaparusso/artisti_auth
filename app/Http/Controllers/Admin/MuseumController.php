@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MuseumRequest;
 use App\Models\Artwork;
 use App\Models\Museum;
 use Dotenv\Util\Str;
@@ -39,7 +40,7 @@ class MuseumController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MuseumRequest $request)
     {
 
         $form_data = $request->all();
@@ -79,7 +80,7 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Museum $museum)
+    public function update(MuseumRequest $request, Museum $museum)
     {
         $form_data = $request->all();
 
