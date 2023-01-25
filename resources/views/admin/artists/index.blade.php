@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <a class="btn btn-info my-4" href="{{ route('admin.artists.create') }}">AGGIUNGI ARTISTA</a>
-        <table class="table text-white">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">ID</th>

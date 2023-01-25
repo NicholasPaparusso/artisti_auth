@@ -1,8 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-
-    <h1 class="text-center text-white mb-5">
+    <h1 class="text-center mb-5">
         ARTWORKS DB
     </h1>
     <div class="container">
@@ -19,14 +18,14 @@
                             <th scope="col">actions</th>
                         </tr>
                     </thead>
-                    <tbody class="text-white">
+                    <tbody>
                         @foreach ($all_artworks as $artwork)
                             <tr class="text-white">
-                                <td class="text-white">{{ $artwork->id }}</td>
-                                <td class="text-white">{{ $artwork->artist_id }}</td>
-                                <td class="text-white">{{ $artwork->museum_id }}</td>
-                                <td class="text-white">{{ $artwork->name }}</td>
-                                <td class="text-white">{{ $artwork->year }}</td>
+                                <td>{{ $artwork->id }}</td>
+                                <td>{{ $artwork->artist_id }}</td>
+                                <td>{{ $artwork->museum_id }}</td>
+                                <td>{{ $artwork->name }}</td>
+                                <td>{{ $artwork->year }}</td>
                                 <td>
                                     <a class="btn btn-success" href="">Vai</a>
                                     <a class="btn btn-warning" href="">Edita</a>
@@ -46,5 +45,4 @@
             </div>
         </div>
     </div>
-
 @endsection

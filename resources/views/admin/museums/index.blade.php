@@ -10,7 +10,7 @@
 
     <div class="container">
 
-        <table class="table text-white">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col"><a href="">ID</a></th>
@@ -26,8 +26,8 @@
                         <td>{{ $museum->name }}</td>
                         <td>{{ $museum->nation }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('admin.museums.show', $museum->slug) }}" title="show"><i
-                                    class="fa-regular fa-eye"></i></a>
+                            <a class="btn btn-primary" href="{{ route('admin.museums.show', $museum->slug) }}"
+                                title="show"><i class="fa-regular fa-eye"></i></a>
                             <a class="btn btn-warning " href="{{ route('admin.museums.edit', $museum) }}" title="edit"><i
                                     class="fa-solid fa-pencil"></i></a>
                         </td>
