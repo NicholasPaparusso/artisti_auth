@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Artwork;
 use App\Models\Museum;
+use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 
 class MuseumController extends Controller
@@ -20,14 +22,6 @@ class MuseumController extends Controller
         return view('admin.museums.index', compact('museums', 'direction'));
     }
 
-    /* public function orderby($column, $direction)
-    {
-        $direction = $direction === 'desc' ? 'asc' : 'desc';
-        $museums = Museum::orderBy($column, $direction)->paginate(8);
-
-        return view('museums.index', compact('direction', 'museums'));
-    }*/
-
     /**
      * Show the form for creating a new resource.
      *
@@ -35,7 +29,8 @@ class MuseumController extends Controller
      */
     public function create()
     {
-        //
+        $artworks = Artwork::all();
+        return view('admin.museums.create', compact('artworks'));
     }
 
     /**
@@ -46,7 +41,11 @@ class MuseumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $form_data = $request->all();
+        $form_data['slug'] = Museum::generateSlug($form_data['name']);
+
+        $new_museum = Museum::create($form_data);
     }
 
     /**
