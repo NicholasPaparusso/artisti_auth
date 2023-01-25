@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Artwork;
 use App\Models\Museum;
+use Dotenv\Util\Str;
 use Illuminate\Http\Request;
 
 class MuseumController extends Controller
@@ -20,14 +22,6 @@ class MuseumController extends Controller
         return view('admin.museums.index', compact('museums', 'direction'));
     }
 
-    /* public function orderby($column, $direction)
-    {
-        $direction = $direction === 'desc' ? 'asc' : 'desc';
-        $museums = Museum::orderBy($column, $direction)->paginate(8);
-
-        return view('museums.index', compact('direction', 'museums'));
-    }*/
-
     /**
      * Show the form for creating a new resource.
      *
@@ -35,7 +29,8 @@ class MuseumController extends Controller
      */
     public function create()
     {
-        //
+        $artworks = Artwork::all();
+        return view('admin.museums.create', compact('artworks'));
     }
 
     /**
@@ -46,7 +41,13 @@ class MuseumController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $form_data = $request->all();
+        $form_data['slug'] = Museum::generateSlug($form_data['name']);
+
+        $new_museum = Museum::create($form_data);
+
+        return redirect()->route('admin.museums.show', compact('museum'))->with('create', "Museo $new_museum aggiunto al db.");
     }
 
     /**
@@ -55,9 +56,9 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Museum $museum)
     {
-        //
+        return view('admin.museums.show', compact('museum'));
     }
 
     /**
@@ -66,9 +67,9 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Museum $museum)
     {
-        //
+        return view('admin.museum.edit', compact('museum'));
     }
 
     /**
@@ -78,9 +79,19 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Museum $museum)
     {
-        //
+        $form_data = $request->all();
+
+        if ($form_data['name'] != $museum->name) {
+            $form_data['slug'] = Museum::generateSlug($form_data['name']);
+        } else {
+            $form_data['slug'] = $museum->slug;
+        }
+
+        $museum->update($form_data);
+
+        return redirect(route('admin.artists.show', compact('museum')))->with('edit', "Museo $museum->name aggiornato correttamente.");
     }
 
     /**
@@ -89,8 +100,10 @@ class MuseumController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Museum $museum)
     {
-        //
+        $museum->delete();
+
+        return redirect(route('admin.artists.index'))->with('delete', "Museo $museum->name eliminato correttamente.");
     }
 }

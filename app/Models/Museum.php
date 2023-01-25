@@ -10,18 +10,19 @@ class Museum extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'nation'];
+    protected $fillable = ['name', 'slug', 'bio'];
 
 
-    public static function generateSlug($string){
+    public static function generateSlug($string)
+    {
         $slug = Str::slug($string, '-');
 
         $original_slug = $slug;
         $c = 1;
-        $museum_exists = Museum::where('slug',$slug)->first();
-        while($museum_exists){
+        $museum_exists = Museum::where('slug', $slug)->first();
+        while ($museum_exists) {
             $slug = $original_slug . '-' . $c;
-            $museum_exists = Museum::where('slug',$slug)->first();
+            $museum_exists = Museum::where('slug', $slug)->first();
             $c++;
         }
         return $slug;
